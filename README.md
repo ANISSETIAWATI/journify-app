@@ -2,9 +2,6 @@
 
 **Journify App** adalah aplikasi berbasis web yang dirancang untuk membantu pengguna membaca berita terkini serta mencatat jurnal harian. Proyek ini dibangun sebagai bagian dari portofolio pengembangan web Front-End.
 
-![Tampilan Aplikasi](image_path_here.png)
-*(Ganti 'image_path_here.png' dengan nama file screenshot aplikasimu jika ada)*
-
 ## 🚀 Fitur Utama
 * **World News Integration:** Menampilkan berita dunia terkini secara real-time menggunakan **GNews API**.
 * **Responsive Design:** Tampilan yang menyesuaikan ukuran layar (Desktop & Mobile).
