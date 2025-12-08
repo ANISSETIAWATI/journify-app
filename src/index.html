@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="/public/favicon.png">
+    <link rel="shortcut icon" href="/public/favicon.png">
+    <link rel="manifest" href="/manifest.json">
+    <script>
+        // Register service worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(function(registration) {
+                        console.log('Service Worker registered successfully:', registration);
+                    })
+                    .catch(function(error) {
+                        console.log('Service Worker registration failed:', error);
+                    });
+            });
+        }
+    </script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <title>Aplikasi SPA Final</title>
+    <meta name="theme-color" content="#8D6E63">
+</head>
+
+<body>
+    <a href="#main-content" class="skip-link">Lewati ke konten</a>
+    
+    <header role="banner">
+      <div class="main-header container">
+          
+          <a class="brand-name" href="#/home">
+            <span>Journify</span>
+          </a>
+          
+          <nav id="navigation-drawer" class="navigation-drawer" role="navigation" aria-label="Navigasi utama">
+            <ul id="nav-list" class="nav-list">
+              <li><a href="#/home">Beranda</a></li>
+              <li><a href="#/about">About</a></li>
+              <li id="map-nav-item" style="display:none;"><a href="#/map">Peta Cerita</a></li>
+              <li id="favorite-nav-item" style="display:none;"><a href="#/favorite">Favorite</a></li>
+              <li id="add-story-nav-item" style="display:none;"><a href="#/add-story">Tambah Cerita</a></li>
+              
+              <li id="push-toggle-list"><button id="push-toggle-btn" class="push-toggle">Enable Notifications</button></li>
+              <li id="install-btn-list"><button id="pwa-install-btn" class="pwa-install">Install App</button></li>
+              
+              <button id="installButton" style="display: none;">Install App</button>
+              
+              <li id="login-nav-item"><a href="#/login">Login</a></li>
+              <li id="register-nav-item"><a href="#/register">Register</a></li>
+              <li id="logout-nav-item" style="display:none;"><a href="#/logout">Logout</a></li>
+            </ul>
+          </nav>
+          
+          <button id="installButton" style="display: none;">Install App</button>
+
+          <button id="drawer-button" class="drawer-button" aria-label="Buka menu navigasi">☰</button>
+      
+      </div> </header> <main id="main-content" class="main-content" role="main" tabindex="-1">
+      <a href="#main-content" class="skip-link">Lewati ke konten utama</a>
+    </main>
+
+    <footer role="contentinfo">
+      </footer>
+
+    <!-- Login Indicator -->
+    <div id="login-indicator" class="login-indicator">
+      <span>Logged in</span>
+    </div>
+
+    <!-- Favorite Indicator -->
+    <div id="favorite-indicator" class="favorite-indicator">
+      <span>Favorited</span>
+    </div>
+
+    </body>
+</html>

@@ -1,0 +1,2 @@
+APP_URL=<Hosting URL: incandescent-pony-2bea62.netlify.app;
+MAP_SERVICE_API_KEY=<api_key>

@@ -1,0 +1,1478 @@
+ /* --- Impor Font dari Google Fonts --- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+
+/* --- 🎨 Variabel Global & Reset Dasar (Tema Coklat) --- */
+:root {
+  --primary-color: #8D6E63;
+  --primary-hover: #6D4C41;
+  --text-color-dark: #4E342E;
+  --text-color-light: #795548;
+  --bg-color: #F5F5F5;
+  --surface-color: #FFFFFF;
+  --border-color: #D7CCC8;
+  --success-color: #689F38;
+  --error-color: #D32F2F;
+
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  
+  --border-radius: 12px;
+  --transition-speed: 0.3s;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color-light);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+h1, h2, h3, h4 {
+  color: var(--text-color-dark);
+  font-weight: 700;
+}
+
+/* --- ♿️ Aksesibilitas --- */
+.skip-link {
+  position: absolute;
+  top: -48px;
+  left: 0;
+  background-color: var(--primary-color);
+  color: white;
+  padding: 12px 16px;
+  z-index: 9999;
+  text-decoration: none;
+  transition: top var(--transition-speed) ease;
+  border-bottom-right-radius: var(--border-radius);
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* --- 🏛️ Header & Navigasi --- */
+header {
+  background-color: rgba(255, 255, 255, 0.8);
+  box-shadow: var(--shadow-md);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 72px;
+}
+
+.brand-name {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+.nav-list {
+  display: flex;
+  list-style: none;
+  gap: 2rem;
+  align-items: center;
+}
+
+.nav-list a {
+  text-decoration: none;
+  color: var(--text-color-light);
+  font-weight: 500;
+  padding: 0.5rem 0;
+  position: relative;
+  transition: color var(--transition-speed) ease;
+}
+
+.nav-list a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -2px;
+  left: 0;
+  background-color: var(--primary-color);
+  transition: width var(--transition-speed) ease;
+}
+
+.nav-list a:hover,
+.nav-list a.active {
+  color: var(--primary-color);
+}
+
+.nav-list a:hover::after,
+.nav-list a.active::after {
+  width: 100%;
+}
+
+.drawer-button {
+  display: none;
+  font-size: 2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-color-dark);
+}
+
+/* --- 📄 Konten Utama & Card --- */
+.main-content {
+  padding: 2.5rem 0;
+}
+
+.main-content .container {
+  background-color: var(--surface-color);
+  padding: 2.5rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-lg);
+  min-height: 75vh;
+}
+
+.main-content .container > h1,
+.main-content .container > h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+/* --- 🎬 Transisi Halaman --- */
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-out {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(-20px); }
+}
+
+::view-transition-old(root) {
+  animation: 300ms ease-out both fade-out;
+}
+::view-transition-new(root) {
+  animation: 300ms ease-in both fade-in;
+}
+
+/* --- 🗺️ Halaman Peta --- */
+.map-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.story-list {
+  flex: 1;
+  min-width: 280px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 75vh;
+  max-height: 100%;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-color) transparent;
+}
+
+.story-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.story-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.story-list::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 3px;
+}
+
+.story-list::-webkit-scrollbar-thumb:hover {
+  background: var(--text-color-light);
+}
+
+.filter-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.filter-controls label {
+  font-weight: 500;
+  color: var(--text-color-dark);
+}
+
+.filter-controls input {
+  padding: 0.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.filter-controls button {
+  align-self: flex-start;
+  padding: 0.5rem 1rem;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.filter-controls button:hover {
+  background-color: var(--primary-hover);
+}
+
+#story-list-items {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 0.75rem;
+  max-height: calc(75vh - 120px); /* Adjust based on filter controls height */
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-color) transparent;
+}
+
+#story-list-items::-webkit-scrollbar {
+  width: 6px;
+}
+
+#story-list-items::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#story-list-items::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 3px;
+}
+
+#story-list-items::-webkit-scrollbar-thumb:hover {
+  background: var(--text-color-light);
+}
+
+.story-item {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color var(--transition-speed) ease, transform 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.story-item:hover,
+.story-item:focus {
+  transform: translateY(-2px);
+  background-color: #F5F5F5;
+  outline: none;
+}
+
+.story-item.active {
+  background-color: #EFEBE9;
+  border-color: var(--primary-color);
+}
+
+.story-item img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.story-item h4 {
+  margin-bottom: 0.25rem;
+}
+
+.map {
+  flex: 2;
+  min-width: 300px;
+  height: 75vh;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-sm);
+}
+
+#pagination-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-top: 1px solid var(--border-color);
+  flex-shrink: 0;
+}
+
+#pagination-controls button {
+  background: transparent;
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all var(--transition-speed) ease;
+}
+
+#pagination-controls span {
+  white-space: nowrap;
+  color: var(--text-color-light);
+  font-size: 0.9rem;
+}
+
+#pagination-controls button:hover:not(:disabled) {
+  background: var(--primary-color);
+  color: white;
+}
+
+#pagination-controls button:disabled {
+  border-color: #ccc;
+  color: #ccc;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.placeholder {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-color-light);
+}
+
+
+/* --- 📝 Formulir & Input --- */
+form {
+  max-width: 600px;
+  margin: 1.5rem auto 0;
+}
+
+form div {
+  margin-bottom: 1.5rem;
+}
+
+form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: var(--text-color-dark);
+}
+
+form input,
+form textarea {
+  width: 100%;
+  padding: 0.875rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: 'Inter', sans-serif;
+  transition: border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+}
+
+form input:focus,
+form textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(141, 110, 99, 0.2);
+}
+
+form button[type="submit"] {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 700;
+  background-color: var(--primary-color);
+  color: white;
+  cursor: pointer;
+  border: none;
+  transition: background-color var(--transition-speed) ease, transform 0.2s ease;
+}
+
+form button[type="submit"]:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-2px);
+}
+
+form button:disabled {
+  background-color: #9E9E9E;
+  cursor: not-allowed;
+  transform: translateY(0);
+}
+
+.feedback {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 8px;
+  display: none;
+  font-weight: 500;
+}
+
+.feedback.show {
+  display: block;
+}
+.feedback.success {
+  background-color: #E8F5E9;
+  color: #2E7D32;
+}
+.feedback.error {
+  background-color: #FFEBEE;
+  color: #C62828;
+}
+
+.error-message {
+  color: var(--error-color);
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  display: block;
+}
+
+#photo-preview {
+  max-width: 100%;
+  max-height: 250px;
+  margin-top: 1rem;
+  display: none;
+  border-radius: var(--border-radius);
+}
+
+#location-map {
+  height: 300px;
+  border-radius: var(--border-radius);
+  margin-top: 0.5rem;
+  z-index: 1;
+}
+
+#camera-container {
+  position: relative;
+  margin-top: 1rem;
+  display: none;
+}
+#camera-feed {
+  width: 100%;
+  border-radius: var(--border-radius);
+}
+
+.camera-controls {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Toast notification */
+#toast-container {
+  position: fixed;
+  right: 1rem;
+  bottom: 1.2rem;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.toast {
+  background: rgba(33,33,33,0.95);
+  color: #fff;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  box-shadow: var(--shadow-lg);
+  min-width: 200px;
+  max-width: 320px;
+  font-size: 0.95rem;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 280ms ease, transform 280ms ease;
+}
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+.toast.success {
+  background: var(--success-color);
+}
+.toast.error {
+  background: var(--error-color);
+}
+
+.camera-controls button {
+  width: auto;
+}
+
+/* --- 📰 Bagian Berita di Beranda --- */
+.divider {
+  border: 0;
+  height: 1px;
+  background: var(--border-color);
+  margin: 2.5rem 0;
+}
+
+.news-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.news-item {
+  display: flex;
+  gap: 1.5rem;
+  background-color: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: 1rem;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  overflow: hidden;
+}
+
+.news-item:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.news-image {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+  background-color: var(--bg-color);
+}
+
+.news-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.news-title {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.1rem;
+}
+
+.news-title a {
+  text-decoration: none;
+  color: var(--text-color-dark);
+  transition: color var(--transition-speed) ease;
+}
+
+.news-title a:hover {
+  color: var(--primary-color);
+}
+
+.news-description {
+  margin: 0 0 1rem 0;
+  font-size: 0.9rem;
+  color: var(--text-color-light);
+  flex-grow: 1;
+}
+
+.news-source {
+  font-size: 0.8rem;
+  color: #A1887F;
+  margin-top: auto;
+}
+
+/* --- ⭐ Gaya Halaman Favorite --- */
+.favorite-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background-color: var(--bg-color);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-color);
+}
+
+.favorite-actions button {
+  padding: 0.75rem 1.5rem;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-speed) ease;
+  flex: 1;
+  min-width: 200px;
+}
+
+.favorite-actions button:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.favorite-actions button:active {
+  transform: translateY(0);
+}
+
+#favorites-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+/* --- 🎯 Gaya Halaman Favorite yang Sederhana dan Profesional --- */
+#favorites-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.favorite-item {
+  background-color: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: 1rem;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: default;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.favorite-item:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.favorite-item img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.favorite-item .story-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.favorite-item h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-color-dark);
+  line-height: 1.3;
+}
+
+.favorite-item p {
+  margin: 0;
+  color: var(--text-color-light);
+  line-height: 1.5;
+  font-size: 0.9rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.favorite-item .story-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: var(--text-color-light);
+}
+
+.favorite-item .story-meta small {
+  color: inherit;
+}
+
+.location-indicator {
+  font-size: 0.9rem;
+}
+
+.remove-favorite-btn {
+  align-self: flex-end;
+  background-color: var(--error-color);
+  color: white;
+  border: none;
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color var(--transition-speed) ease;
+}
+
+.remove-favorite-btn:hover {
+  background-color: #B71C1C;
+}
+
+
+
+.delete-story-btn {
+  margin-top: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: var(--error-color);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color var(--transition-speed) ease;
+}
+
+.delete-story-btn:hover {
+  background-color: #B71C1C;
+}
+
+/* --- Kontrol Interaktivitas Halaman Favorite --- */
+.favorite-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background-color: var(--bg-color);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-color);
+}
+
+.favorite-controls input,
+.favorite-controls select {
+  padding: 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  flex: 1;
+  min-width: 200px;
+}
+
+.favorite-controls input:focus,
+.favorite-controls select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.2);
+}
+
+.favorite-controls button {
+  padding: 0.75rem 1.5rem;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-speed) ease;
+  min-width: 100px;
+}
+
+.favorite-controls button:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* --- ✨ Gaya Halaman About --- */
+.about-page {
+  text-align: center;
+}
+
+.about-hero-image {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: var(--border-radius);
+  margin-bottom: 2rem;
+}
+
+.about-title {
+  font-size: 2.5rem;
+  color: var(--text-color-dark);
+}
+
+.about-subtitle {
+  font-size: 1.1rem;
+  color: var(--text-color-light);
+  max-width: 600px;
+  margin: 0.5rem auto 3rem auto;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  text-align: left;
+  margin-bottom: 3rem;
+}
+
+.feature-card {
+  background-color: var(--bg-color);
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-color);
+}
+
+.feature-icon {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.feature-card h3 {
+  margin-bottom: 0.5rem;
+  color: var(--text-color-dark);
+}
+
+.developer-profile {
+  background-color: var(--bg-color);
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  margin-top: 2rem;
+}
+
+.developer-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--surface-color);
+  box-shadow: var(--shadow-md);
+}
+
+.developer-name {
+  font-size: 1.2rem;
+  font-weight: 700;
+  background: linear-gradient(45deg, var(--primary-color), var(--primary-hover));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+
+/* --- 🔔 Gaya Notifikasi Toast --- */
+.toast-notification {
+  position: fixed;
+  top: 90px;
+  right: 20px;
+  background-color: var(--surface-color);
+  color: var(--text-color-dark);
+  padding: 1rem 1.5rem;
+  border-radius: var(--border-radius);
+  border-left: 5px solid var(--success-color);
+  box-shadow: var(--shadow-lg);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transform: translateX(120%);
+  opacity: 0;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.toast-notification.active {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.toast-notification p {
+  margin: 0;
+  font-weight: 500;
+}
+
+.toast-notification .close-btn {
+  background: none;
+  border: none;
+  color: var(--text-color-light);
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0 0.5rem;
+  line-height: 1;
+}
+
+/* --- 🔔 Push Notification Toggle Styles --- */
+.push-toggle {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all var(--transition-speed) ease, transform 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.push-toggle:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.push-toggle.subscribed {
+  background-color: var(--success-color);
+  animation: pulse-success 0.6s ease-out;
+}
+
+.push-toggle:disabled {
+  background-color: #9E9E9E;
+  cursor: not-allowed;
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+@keyframes pulse-success {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+/* --- 🔴 Login Indicator Styles --- */
+.login-indicator {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background-color: var(--success-color);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  z-index: 1000;
+  box-shadow: var(--shadow-md);
+  display: none;
+  align-items: center;
+  gap: 0.5rem;
+  animation: slide-in-left 0.5s ease-out;
+}
+
+.login-indicator.show {
+  display: flex;
+}
+
+.login-indicator::before {
+  content: '✓';
+  font-size: 1.2rem;
+}
+
+@keyframes slide-in-left {
+  from { transform: translateX(-120%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+/* --- ❤️ Favorite Indicator Styles --- */
+.favorite-indicator {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #e91e63;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  z-index: 1000;
+  box-shadow: var(--shadow-md);
+  display: none;
+  align-items: center;
+  gap: 0.5rem;
+  animation: slide-in-right 0.5s ease-out;
+}
+
+.favorite-indicator.show {
+  display: flex;
+}
+
+.favorite-indicator::before {
+  content: '❤️';
+  font-size: 1.2rem;
+}
+
+@keyframes slide-in-right {
+  from { transform: translateX(120%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+/* --- 🦶 Footer --- */
+footer {
+  background-color: #8B6A66;
+  color: #f8f8f8;
+  padding: 1.5rem 0;
+  text-align: center;
+  width: 100%;
+}
+
+footer p {
+  margin: 0 0 1rem 0;
+  font-size: 0.9rem;
+}
+
+.social-links {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.social-links a {
+  display: inline-block;
+  color: #f8f8f8;
+  transition: transform 0.3s ease;
+}
+
+.social-links a:hover {
+  transform: translateY(-3px);
+  color: #fff;
+}
+
+.social-links svg {
+  width: 28px;
+  height: 28px;
+  fill: currentColor;
+}
+
+/* --- 📚 Riwayat Cerita (Story History) --- */
+.history-btn {
+  position: fixed;
+  top: 100px;
+  right: 20px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  z-index: 1000;
+  box-shadow: var(--shadow-md);
+  transition: background-color var(--transition-speed) ease;
+}
+
+.history-btn:hover {
+  background-color: var(--primary-hover);
+}
+
+.story-history {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.modal-content {
+  background-color: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-lg);
+  padding: 2rem;
+  max-width: 600px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.history-header h2 {
+  margin: 0;
+  color: var(--text-color-dark);
+  font-size: 1.5rem;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  color: var(--text-color-dark);
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 4px;
+  transition: background-color var(--transition-speed) ease;
+}
+
+.close-btn:hover {
+  background-color: var(--border-color);
+}
+.story-history {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-lg);
+  padding: 2rem;
+  max-width: 600px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  z-index: 2000;
+}
+
+.story-history h2 {
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: var(--text-color-dark);
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.history-item {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color var(--transition-speed) ease, transform 0.2s ease;
+  background-color: var(--bg-color);
+}
+
+.history-item:hover {
+  background-color: #EFEBE9;
+  transform: translateY(-2px);
+}
+
+.history-item img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.history-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.history-info h4 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-color-dark);
+  line-height: 1.3;
+}
+
+.history-info p {
+  margin: 0;
+  color: var(--text-color-light);
+  line-height: 1.5;
+  font-size: 0.9rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.history-info small {
+  color: var(--text-color-light);
+  font-size: 0.8rem;
+}
+
+.history-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.offline-badge {
+  background-color: #FF9800;
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  display: inline-block;
+  margin-top: 0.25rem;
+}
+
+/* --- 📱 Media Queries untuk Responsif --- */
+@media (max-width: 1024px) {
+  .main-content .container {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .map-container {
+    height: auto;
+  }
+  .map {
+    order: -1;
+    height: 50vh;
+  }
+  .story-list {
+    height: auto;
+    max-height: 50vh;
+  }
+  .navigation-drawer {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 250px;
+    height: 100%;
+    background-color: var(--surface-color);
+    box-shadow: var(--shadow-lg);
+    transition: left 0.3s ease-in-out;
+    z-index: 1001;
+  }
+  .navigation-drawer.open {
+    left: 0;
+  }
+  .nav-list {
+    flex-direction: column;
+    align-items: flex-start;
+    padding-top: 5rem;
+    padding-left: 2rem;
+    gap: 1.5rem;
+  }
+  .drawer-button {
+    display: block;
+  }
+}
+
+@media (max-width: 480px) {
+  .news-item {
+    flex-direction: column;
+  }
+  .news-image {
+    width: 100%;
+    height: 150px;
+  }
+}
+
+/* --- ✅ TAMBAHAN UNTUK PENYEMPURNAAN --- */
+
+/* 1. Efek Scrolling Halus */
+html {
+  scroll-behavior: smooth;
+}
+
+/* 2. Gaya untuk Tombol Love dan Favorite */
+.story-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.love-btn {
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, color 0.2s ease;
+  padding: 0.25rem;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  min-height: 40px;
+}
+
+.love-btn:hover {
+  transform: scale(1.2);
+  background-color: rgba(233, 30, 99, 0.1);
+}
+
+.love-btn.loved {
+  color: #e91e63;
+}
+
+.love-btn:not(.loved) {
+  color: #ccc;
+}
+
+.favorite-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.favorite-btn:hover {
+  transform: scale(1.1);
+}
+
+.favorite-btn.favorited {
+  color: #ffd700;
+}
+
+/* 2. Gaya untuk Loader/Spinner */
+.loader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: opacity 0.3s ease;
+}
+
+.loader-spinner {
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid var(--primary-color);
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loader-overlay.hidden {
+  opacity: 0;
+  pointer-events: none; /* Agar tidak bisa diklik saat transparan */
+}
+
+/* 3. Gaya Fokus yang Lebih Jelas untuk Aksesibilitas */
+/* Terapkan hanya saat fokus menggunakan keyboard (Tab) */
+a:focus-visible,
+button:focus-visible,
+[tabindex]:not([tabindex="-1"]):focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* News Section Styles */
+.news-section {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.news-section h2 {
+  color: #333;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 0.5rem;
+}
+
+.news-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.news-item {
+  background: white;
+  padding: 1rem;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid #007bff;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.news-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.news-item h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.1rem;
+  line-height: 1.4;
+}
+
+.news-item h3 a {
+  color: #007bff;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.news-item h3 a:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
+
+.news-description {
+  color: #666;
+  margin: 0.5rem 0;
+  line-height: 1.5;
+  font-size: 0.95rem;
+}
+
+.news-meta {
+  color: #888;
+  font-size: 0.85rem;
+  display: block;
+  margin-top: 0.5rem;
+}
+
+.news-container p {
+  text-align: center;
+  color: #666;
+  font-style: italic;
+  margin: 2rem 0;
+}
+
+.news-timestamp {
+  text-align: center;
+  font-size: 0.85rem;
+  color: #888;
+  margin-bottom: 1rem;
+  font-style: italic;
+}
+
+
+
