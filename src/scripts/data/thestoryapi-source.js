@@ -1,7 +1,10 @@
 import API_ENDPOINT from './api';
 import idb from './idb';
+import mockBerita from './mock-news';
 
 class TheStoryApiSource {
+    // Last raw response (for debugging)
+    static lastNewsRaw = null;
     static _fixPhotoUrl(story) {
         // ... (kode _fixPhotoUrl tidak berubah)
         if (story.photoUrl && !story.photoUrl.startsWith('http')) {
@@ -144,6 +147,12 @@ class TheStoryApiSource {
             }
 
             const responseJson = await response.json();
+
+            // Save raw response for debugging UI
+            TheStoryApiSource.lastNewsRaw = responseJson;
+
+            // Log raw response shape to help debugging when UI shows no items
+            console.debug('TheStoryApiSource: raw news response:', responseJson);
 
             if (responseJson.error) {
                 throw new Error(responseJson.message);
@@ -469,15 +478,69 @@ class TheStoryApiSource {
 
             const responseJson = await response.json();
 
-            // GNews API doesn't have status field like NewsAPI, check for articles array
-            if (!responseJson.articles || !Array.isArray(responseJson.articles)) {
-                throw new Error('Invalid response format from GNews API');
+            // Normalize several possible response shapes:
+            // 1) { articles: [...] } (NewsAPI / GNews)
+            // 2) [...] (some public endpoints return array directly)
+            // 3) { data: [...] } or other wrappers
+            let articles = [];
+
+            if (Array.isArray(responseJson)) {
+                articles = responseJson;
+            } else if (responseJson.articles && Array.isArray(responseJson.articles)) {
+                articles = responseJson.articles;
+            } else if (responseJson.data && Array.isArray(responseJson.data)) {
+                articles = responseJson.data;
+            } else if (responseJson.result && Array.isArray(responseJson.result)) {
+                articles = responseJson.result;
+            } else {
+                // Try to detect common single-level array under other keys
+                const possible = Object.values(responseJson).find(v => Array.isArray(v));
+                if (possible) articles = possible;
             }
 
-            return responseJson.articles;
+            // Map/normalize each article to expected fields used by UI
+            const normalized = articles.map(item => {
+                const title = item.title || item.judul || item.nama || item.headline || '';
+                const url = item.url || item.link || item.sourceUrl || item.source_url || item.urlToImage ? item.url : (item.link || '');
+                const description = item.description || item.content || item.summary || item.isi || '';
+                const sourceName = (item.source && (item.source.name || item.source)) || item.publisher || item.sumber || item.author || 'Unknown';
+                const publishedAt = item.publishedAt || item.published_at || item.pubDate || item.date || item.tanggal || new Date().toISOString();
+
+                return {
+                    title,
+                    url,
+                    description,
+                    source: { name: sourceName },
+                    publishedAt,
+                    // keep original object for debugging if needed
+                    _raw: item,
+                };
+            });
+
+            console.debug('TheStoryApiSource: normalized news count=', normalized.length, 'sample=', normalized.slice(0,3));
+
+            // Jika tidak ada artikel (mis. API limit atau error), gunakan fallback dummy
+            if (!normalized || normalized.length === 0) {
+                const now = new Date().toISOString();
+                // Use user's mock data when API returns no articles
+                const dummy = mockBerita.map(item => ({
+                    title: item.title,
+                    url: item.url || '#',
+                    description: item.description || '',
+                    source: { name: item.source || 'Contoh News' },
+                    publishedAt: item.publishedAt || now,
+                    image: item.image || null,
+                    _raw: { dummy: true, ...item },
+                }));
+
+                // simpan juga ke lastNewsRaw agar debugging UI menampilkan dummy
+                TheStoryApiSource.lastNewsRaw = { dummy: true, articles: dummy };
+                return dummy;
+            }
+
+            return normalized;
         } catch (error) {
             console.warn('Failed to fetch Indonesia news:', error);
-            // Return empty array on error to avoid breaking the app
             return [];
         }
     }

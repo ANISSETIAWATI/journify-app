@@ -28,7 +28,9 @@ const API_ENDPOINT = {
   REGISTER: `${CONFIG.BASE_URL}/register`,
   LOGIN: `${CONFIG.BASE_URL}/login`,
   NOTIFICATIONS_SUBSCRIBE: `${CONFIG.BASE_URL}/notifications/subscribe`,
-  INDONESIA_NEWS: 'https://gnews.io/api/v4/top-headlines?country=id&apikey=3d075fc276b24abba34ecab5919b32b7',
+  // Gunakan endpoint publik sementara untuk menampilkan berita tanpa API key
+  INDONESIA_NEWS: 'https://api-berita-indonesia.vercel.app/antara/terbaru',
 };
+
 
 export default API_ENDPOINT;

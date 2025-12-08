@@ -33,20 +33,55 @@ export default class HomePage {
         const news = await TheStoryApiSource.getIndonesiaNews();
 
         if (news && news.length > 0) {
-          const newsHTML = news.slice(0, 10).map(article => `
+          const newsHTML = news.slice(0, 10).map(article => {
+            const imageUrl = article.image || (article._raw && (article._raw.image || article._raw.urlToImage)) || '';
+            const isDummy = article._raw && (article._raw.dummy || article._raw.note === 'dummy');
+
+            return `
             <article class="news-item">
-              <h3><a href="${article.url}" target="_blank" rel="noopener">${article.title}</a></h3>
-              <p class="news-description">${article.description || 'Deskripsi tidak tersedia'}</p>
-              <small class="news-meta">
-                Sumber: ${article.source.name} |
-                Tanggal: ${new Date(article.publishedAt).toLocaleDateString('id-ID')} ${new Date(article.publishedAt).toLocaleTimeString('id-ID')}
-              </small>
+              <div class="news-image" style="flex: 0 0 150px;">
+                ${imageUrl ? `<img src="${imageUrl}" alt="${article.title}" style="width:150px;height:100px;object-fit:cover;border-radius:6px;">` : ''}
+              </div>
+              <div class="news-content" style="flex:1;">
+                <h3 class="news-title"><a href="${article.url}" target="_blank" rel="noopener">${article.title}</a> ${isDummy ? '<span class="dummy-badge" style="font-size:12px;color:#aaa;margin-left:8px;">(Contoh)</span>' : ''}</h3>
+                <p class="news-description">${article.description || 'Deskripsi tidak tersedia'}</p>
+                <small class="news-meta">Sumber: ${article.source.name} | Tanggal: ${new Date(article.publishedAt).toLocaleDateString('id-ID')} ${new Date(article.publishedAt).toLocaleTimeString('id-ID')}</small>
+              </div>
             </article>
-          `).join('');
+          `;
+          }).join('');
 
           newsContainer.innerHTML = newsHTML;
         } else {
           newsContainer.innerHTML = '<p>Tidak ada berita tersedia saat ini.</p>';
+
+          // Tambah tombol debug untuk menampilkan response mentah jika tersedia
+          const debugBtn = document.createElement('button');
+          debugBtn.textContent = 'Tampilkan debug response';
+          debugBtn.style.marginTop = '12px';
+          debugBtn.addEventListener('click', () => {
+            try {
+              const raw = TheStoryApiSource.lastNewsRaw;
+              console.log('Raw news response:', raw);
+              let pre = document.getElementById('news-raw');
+              if (!pre) {
+                pre = document.createElement('pre');
+                pre.id = 'news-raw';
+                pre.style.whiteSpace = 'pre-wrap';
+                pre.style.maxHeight = '300px';
+                pre.style.overflow = 'auto';
+                pre.style.background = '#f6f6f6';
+                pre.style.padding = '12px';
+                pre.style.marginTop = '12px';
+              }
+              pre.textContent = JSON.stringify(raw, null, 2);
+              newsContainer.appendChild(pre);
+            } catch (e) {
+              console.error('Gagal menampilkan debug response:', e);
+            }
+          });
+
+          newsContainer.appendChild(debugBtn);
         }
       } catch (error) {
         console.error('Error loading news:', error);
