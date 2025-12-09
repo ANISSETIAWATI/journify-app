@@ -80,5 +80,45 @@
       <span>Favorited</span>
     </div>
 
+    <div id="copyright-lock" style="position: fixed; inset: 0; background: #0f172a; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; font-family: sans-serif;">
+    <h2 style="margin-bottom: 1rem;">🔒 Journify App Locked</h2>
+    <p style="margin-bottom: 1.5rem; color: #94a3b8;">Masukkan Kunci Akses untuk membuka.</p>
+    <div style="display: flex; gap: 0.5rem;">
+        <input type="password" id="access-key" placeholder="Masukkan Kunci..." style="padding: 0.5rem 1rem; border-radius: 0.5rem; border: none; outline: none; color: black;">
+        <button onclick="checkAccess()" style="padding: 0.5rem 1rem; background: #db2777; border: none; border-radius: 0.5rem; color: white; cursor: pointer; font-weight: bold;">Buka</button>
+    </div>
+    <p id="error-msg" style="color: #ef4444; margin-top: 1rem; font-size: 0.875rem; display: none;">Kunci salah!</p>
+    <div style="margin-top: 2rem; font-size: 0.75rem; color: #64748b;">© 2025 Anis Setiawati</div>
+</div>
+
+<script>
+    // --- LOGIKA KUNCI AKSES ---
+    function checkAccess() {
+        const input = document.getElementById('access-key').value;
+        const correctKey = "ANIS2025"; // <--- GANTI PASSWORD DI SINI
+        const overlay = document.getElementById('copyright-lock');
+        const errorMsg = document.getElementById('error-msg');
+
+        if(input === correctKey) {
+            // Efek memudar saat berhasil
+            overlay.style.transition = "opacity 0.5s";
+            overlay.style.opacity = "0";
+            setTimeout(() => {
+                overlay.style.display = "none";
+            }, 500);
+            
+            // Simpan status login di sesi ini (agar tidak tanya lagi kalau di-refresh)
+            sessionStorage.setItem('isUnlocked', 'true');
+        } else {
+            errorMsg.style.display = "block";
+        }
+    }
+
+    // Cek apakah sudah pernah login sebelumnya
+    if(sessionStorage.getItem('isUnlocked') === 'true') {
+        document.getElementById('copyright-lock').style.display = "none";
+    }
+</script>
+
     </body>
 </html>

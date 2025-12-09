@@ -469,80 +469,23 @@ class TheStoryApiSource {
     //          FUNGSI GET INDONESIA NEWS
     // =======================================================
     static async getIndonesiaNews() {
-        try {
-            const response = await fetch(API_ENDPOINT.INDONESIA_NEWS);
+        // Always return dummy data for homepage news section
+        const now = new Date().toISOString();
+        const dummy = mockBerita.map(item => ({
+            title: item.title,
+            url: item.url || '#',
+            description: item.description || '',
+            source: { name: 'Contoh News' },
+            publishedAt: item.publishedAt || now,
+            image: item.image || null,
+            _raw: { dummy: true, ...item },
+        }));
 
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
+        // Set lastNewsRaw for debugging UI
+        TheStoryApiSource.lastNewsRaw = { dummy: true, articles: dummy };
 
-            const responseJson = await response.json();
-
-            // Normalize several possible response shapes:
-            // 1) { articles: [...] } (NewsAPI / GNews)
-            // 2) [...] (some public endpoints return array directly)
-            // 3) { data: [...] } or other wrappers
-            let articles = [];
-
-            if (Array.isArray(responseJson)) {
-                articles = responseJson;
-            } else if (responseJson.articles && Array.isArray(responseJson.articles)) {
-                articles = responseJson.articles;
-            } else if (responseJson.data && Array.isArray(responseJson.data)) {
-                articles = responseJson.data;
-            } else if (responseJson.result && Array.isArray(responseJson.result)) {
-                articles = responseJson.result;
-            } else {
-                // Try to detect common single-level array under other keys
-                const possible = Object.values(responseJson).find(v => Array.isArray(v));
-                if (possible) articles = possible;
-            }
-
-            // Map/normalize each article to expected fields used by UI
-            const normalized = articles.map(item => {
-                const title = item.title || item.judul || item.nama || item.headline || '';
-                const url = item.url || item.link || item.sourceUrl || item.source_url || item.urlToImage ? item.url : (item.link || '');
-                const description = item.description || item.content || item.summary || item.isi || '';
-                const sourceName = (item.source && (item.source.name || item.source)) || item.publisher || item.sumber || item.author || 'Unknown';
-                const publishedAt = item.publishedAt || item.published_at || item.pubDate || item.date || item.tanggal || new Date().toISOString();
-
-                return {
-                    title,
-                    url,
-                    description,
-                    source: { name: sourceName },
-                    publishedAt,
-                    // keep original object for debugging if needed
-                    _raw: item,
-                };
-            });
-
-            console.debug('TheStoryApiSource: normalized news count=', normalized.length, 'sample=', normalized.slice(0,3));
-
-            // Jika tidak ada artikel (mis. API limit atau error), gunakan fallback dummy
-            if (!normalized || normalized.length === 0) {
-                const now = new Date().toISOString();
-                // Use user's mock data when API returns no articles
-                const dummy = mockBerita.map(item => ({
-                    title: item.title,
-                    url: item.url || '#',
-                    description: item.description || '',
-                    source: { name: item.source || 'Contoh News' },
-                    publishedAt: item.publishedAt || now,
-                    image: item.image || null,
-                    _raw: { dummy: true, ...item },
-                }));
-
-                // simpan juga ke lastNewsRaw agar debugging UI menampilkan dummy
-                TheStoryApiSource.lastNewsRaw = { dummy: true, articles: dummy };
-                return dummy;
-            }
-
-            return normalized;
-        } catch (error) {
-            console.warn('Failed to fetch Indonesia news:', error);
-            return [];
-        }
+        console.debug('TheStoryApiSource: returning dummy news count=', dummy.length);
+        return dummy;
     }
 }
 
