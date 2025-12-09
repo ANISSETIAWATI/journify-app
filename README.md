@@ -32,6 +32,10 @@ Kode sumber dan aset dalam repository ini adalah kekayaan intelektual dari **Ani
 
 * **DILARANG KERAS** menyalin, mendistribusikan ulang, atau menggunakan kode ini untuk kepentingan komersial tanpa izin tertulis dari pemilik.
 * Akses ke kode ini tidak memberikan hak untuk memodifikasi atau mengklaim kepemilikan.
+Aplikasi ini dilindungi oleh hak cipta. Untuk menjaga eksklusivitas dan keamanan konten selama masa pengembangan/penilaian, akses ke aplikasi ini **dikunci**.
 
----
-*Dibuat dengan ❤️ oleh [Anis Setiawati](https://github.com/ANISSETIAWATI)*
+> **Dibutuhkan "Access Key" untuk membuka antarmuka aplikasi.**
+
+Jika Anda adalah penilai atau pihak yang berkepentingan, silakan hubungi pengembang untuk mendapatkan kunci akses.
+
+*Dibuat oleh Anis Setiawati - Teknik Elektro Universitas Lampung.*
